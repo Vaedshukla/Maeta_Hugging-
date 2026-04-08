@@ -1,0 +1,6 @@
+spec_version: 1
+name: dataclean_env
+type: space
+runtime: fastapi
+app: dataclean_env.server.app:app
+port: 8000

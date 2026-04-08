@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openenv-dataclean-env"
+version = "0.1.0"
+description = "Data Cleaning environment for OpenEnv - trains AI agents to clean messy tabular data"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core[core]>=0.2.2",
+    "fastapi>=0.115.0",
+    "pydantic>=2.0.0",
+    "uvicorn>=0.24.0",
+    "gradio>=4.0.0",
+    "pandas>=2.0.0",
+    "openai>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "pytest-cov>=4.0.0"]
+train = ["trl>=0.16.0", "transformers>=5.2.0", "torch>=2.0.0", "accelerate>=0.30.0", "datasets>=2.0.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Load the openenv mock as an early plugin before package imports
+addopts = "-p _mock_openenv"
+pythonpath = ["tests"]
+
+[project.scripts]
+server = "dataclean_env.server.app:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["dataclean_env", "dataclean_env.server"]
+package-dir = {"dataclean_env" = ".", "dataclean_env.server" = "server"}
